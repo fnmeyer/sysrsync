@@ -2,10 +2,7 @@ from typing import Tuple, Optional
 
 
 def get_directory_with_ssh(directory: str, ssh: Optional[str]) -> str:
-    if ssh is None:
-        return directory
-
-    return f'{ssh}:{directory}'
+    return directory if ssh is None else f'{ssh}:{directory}'
 
 
 def sanitize_trailing_slash(source_dir, target_dir, sync_sourcedir_contents=True):
