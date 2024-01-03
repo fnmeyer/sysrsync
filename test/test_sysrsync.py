@@ -10,24 +10,27 @@ from sysrsync.exceptions import RemotesError, PrivateKeyError
 class TestPackage(unittest.TestCase):
     """Unit tests for the sysrsync package."""
 
-    def test_get_exclusions(self):
+    def test_get_exclusions(self) -> None:
         """Test the get_exclusions function."""
+
         exclusions = ['a', 'b']
         expect = ['--exclude', 'a', '--exclude', 'b']
         result = get_exclusions(exclusions)
 
         self.assertEqual(expect, result)
 
-    def test_get_exclusions_already_in_rsync_format(self):
+    def test_get_exclusions_already_in_rsync_format(self) -> None:
         """Test ignoring --exclude in exclusions."""
+
         exclusions = ['--exclude', 'a', '--exclude', 'b']
         expect = ['--exclude', 'a', '--exclude', 'b']
         result = get_exclusions(exclusions)
 
         self.assertEqual(expect, result)
 
-    def test_simple_rsync_command(self):
+    def test_simple_rsync_command(self) -> None:
         """Test generating a simple rsync command."""
+
         source = '/a'
         target = '/b'
         expect = 'rsync /a/ /b'.split()
@@ -35,8 +38,9 @@ class TestPackage(unittest.TestCase):
 
         self.assertEqual(expect, result)
 
-    def test_rsync_options(self):
+    def test_rsync_options(self) -> None:
         """Test generating an rsync command with options."""
+
         source = '/a'
         target = '/b'
         options = ['-a', '--verbose']
@@ -45,8 +49,9 @@ class TestPackage(unittest.TestCase):
 
         self.assertEqual(expect, result)
 
-    def test_simple_rsync_command_content_false(self):
+    def test_simple_rsync_command_content_false(self) -> None:
         """Test generating a simple rsync command with sync_source_contents set to False."""
+
         source = '/a'
         target = '/b'
         expect = 'rsync /a /b'.split()
@@ -54,8 +59,9 @@ class TestPackage(unittest.TestCase):
 
         self.assertEqual(expect, result)
 
-    def test_rsync_exclusions(self):
+    def test_rsync_exclusions(self) -> None:
         """Test generating an rsync command with exclusions."""
+
         source = '/a'
         target = '/b'
         exclusions = ['file1', 'file2']
@@ -64,8 +70,9 @@ class TestPackage(unittest.TestCase):
 
         self.assertEqual(expect, result)
 
-    def test_rsync_exclusions_source_ssh(self):
+    def test_rsync_exclusions_source_ssh(self) -> None:
         """Test generating an rsync command with exclusions and source SSH."""
+
         source = '/a'
         source_ssh = 'host1'
         target = '/b'
@@ -75,8 +82,9 @@ class TestPackage(unittest.TestCase):
 
         self.assertEqual(expect, result)
 
-    def test_rsync_exclusions_target_ssh(self):
+    def test_rsync_exclusions_target_ssh(self) -> None:
         """Test generating an rsync command with exclusions and destination SSH."""
+
         source = '/a'
         target_ssh = 'host1'
         target = '/b'
@@ -86,8 +94,9 @@ class TestPackage(unittest.TestCase):
 
         self.assertEqual(expect, result)
 
-    def test_rsync_throws_both_remotes(self):
+    def test_rsync_throws_both_remotes(self) -> None:
         """Test raising RemotesError when both source and destination are remotes."""
+
         source_ssh = 'host1'
         source = '/a'
         target_ssh = 'host2'
@@ -95,8 +104,9 @@ class TestPackage(unittest.TestCase):
         with self.assertRaises(RemotesError):
             get_rsync_command(source, target, source_ssh=source_ssh, destination_ssh=target_ssh)
 
-    def test_rsync_private_key(self):
+    def test_rsync_private_key(self) -> None:
         """Test generating an rsync command with a private key."""
+
         with NamedTemporaryFile() as temp_file:
             source_dir = '/home/user/files/'
             target_dir = '/home/server/files'
@@ -117,8 +127,9 @@ class TestPackage(unittest.TestCase):
                                        strict_host_key_checking=strict_host_key_checking)
             self.assertEqual(expect, actual)
 
-    def test_rsync_private_key_missing(self):
+    def test_rsync_private_key_missing(self) -> None:
         """Test raising PrivateKeyError when the private key file is missing."""
+
         source_dir = '/home/user/files/'
         target_dir = '/home/server/files'
         destination_ssh = 'myserver'

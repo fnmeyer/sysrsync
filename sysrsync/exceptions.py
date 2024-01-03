@@ -8,7 +8,7 @@ class RemotesError(Exception):
             both be remote.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """Initialize the RemotesError exception."""
         message = 'source and destination cannot both be remote'
         super().__init__(message)
@@ -31,7 +31,7 @@ class PrivateKeyError(Exception):
         message: The error message indicating that the private key file does not exist.
     """
 
-    def __init__(self, key_file):
+    def __init__(self, key_file: str) -> None:
         """Initialize the PrivateKeyError exception."""
         message = f'Private Key File "{key_file}" does not exist'
         super().__init__(message)

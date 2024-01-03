@@ -22,8 +22,11 @@ def get_exclusions(exclusions: Iterable[str]) -> Iterable[str]:
                     for exclusion in exclusions
                     if exclusion != '--exclude'))
 
-
-def get_rsh_command(private_key: Optional[str] = None, port: Optional[int] = None, strict_host_key_checking: Optional[bool] = None):
+def get_rsh_command(
+    private_key: Optional[str] = None,
+    port: Optional[int] = None,
+    strict_host_key_checking: Optional[bool] = None,
+) -> List[str]:
     """Generate rsync remote shell (rsh) command with the specified options.
 
     Args:
@@ -37,6 +40,7 @@ def get_rsh_command(private_key: Optional[str] = None, port: Optional[int] = Non
     Returns:
         List[str]: A list containing the rsync rsh command and its options.
     """
+
     args: List[str] = []
 
     if private_key is not None:

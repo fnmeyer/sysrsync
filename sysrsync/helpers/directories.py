@@ -20,8 +20,11 @@ def get_directory_with_ssh(directory: str, ssh: Optional[str]) -> str:
     return f'{ssh}:{directory}'
 
 
-def sanitize_trailing_slash(source_dir, target_dir, sync_sourcedir_contents=True):
-    # type: (str, str, bool) -> Tuple[str, str]
+def sanitize_trailing_slash(
+    source_dir: str,
+    target_dir: str,
+    sync_sourcedir_contents: Optional[bool] = True,
+) -> Tuple[str, str]:
     """
     Sanitizes the trailing slashes in the source and target directories.
 
@@ -35,6 +38,7 @@ def sanitize_trailing_slash(source_dir, target_dir, sync_sourcedir_contents=True
         Tuple[str, str]: A tuple containing the sanitized source directory path and the
             sanitized target directory path.
     """
+
     target_dir = strip_trailing_slash(target_dir)
 
     if sync_sourcedir_contents is True:

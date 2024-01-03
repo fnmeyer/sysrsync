@@ -5,8 +5,14 @@ import subprocess
 from sysrsync.command_maker import get_rsync_command
 from sysrsync.exceptions import RsyncError
 
+from typing import Optional
 
-def run(cwd=os.getcwd(), strict=True, verbose=False, **kwargs):
+def run(
+    cwd: Optional[str] = os.getcwd(),
+    strict: Optional[bool] = True,
+    verbose: Optional[bool] = False,
+    **kwargs,
+) -> subprocess.CompletedProcess:
     """Run the rsync command with the specified options.
 
     Args:
@@ -22,6 +28,7 @@ def run(cwd=os.getcwd(), strict=True, verbose=False, **kwargs):
         subprocess.CompletedProcess: The completed process object representing the
             execution of the rsync command.
     """
+
     rsync_command = get_rsync_command(**kwargs)
 
     rsync_string = ' '.join(rsync_command)
@@ -38,7 +45,10 @@ def run(cwd=os.getcwd(), strict=True, verbose=False, **kwargs):
     return process
 
 
-def _check_return_code(return_code: int, action: str):
+def _check_return_code(
+    return_code: int,
+    action: str,
+) -> None:
     """Check the return code of an action and raises an exception if it is non-zero.
 
     Args:
@@ -49,5 +59,6 @@ def _check_return_code(return_code: int, action: str):
         RsyncError: If the return code is non-zero, an exception is raised with an
             error message indicating the action and the return code.
     """
+
     if return_code != 0:
         raise RsyncError(f"[sysrsync runner] {action} exited with code {return_code}")
